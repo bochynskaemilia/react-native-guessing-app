@@ -14,7 +14,7 @@ import Card from "../components/Card";
 import Input from "../components/Input";
 import Number from "../components/Number";
 
-const StartGameScreen = () => {
+const StartGameScreen = ({ onStartGame }) => {
   const [enteredValue, setEnteredValue] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
@@ -50,9 +50,9 @@ const StartGameScreen = () => {
   if (confirmed) {
     confirmedOutput = (
       <Card style={styles.summaryContainer}>
-        <Text>You selected </Text>
+        <Text>You've selected </Text>
         <Number>{selectedNumber}</Number>
-        <Button title="START GAME" />
+        <Button title="START GAME" onPress={() => onStartGame(selectedNumber)} />
       </Card>
     )
   }

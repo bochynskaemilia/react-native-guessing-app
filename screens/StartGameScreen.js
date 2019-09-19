@@ -9,9 +9,9 @@ const StartGameScreen = () => {
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Start a New Game!</Text>
-      <Card styles={styles.inputContainer}>
+      <Card style={styles.inputContainer}>
         <Text>Select a Number</Text>
-        <Input styles={styles.input} />
+        <Input style={styles.input} />
         <View style={styles.buttonsContainer}>
           <View style={styles.button}>
             <Button

@@ -3,7 +3,7 @@ import { View, TextInput, StyleSheet } from 'react-native';
 import Colors from "../constants/colors";
 
 const Input = props => {
-  return <TextInput {...props} style={{ ...styles.input, ...props.styles }} />
+  return <TextInput {...props} style={{ ...styles.input, ...props.style }} />
 };
 
 const styles = StyleSheet.create({

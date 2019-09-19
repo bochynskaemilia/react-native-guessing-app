@@ -13,5 +13,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginVertical: 10
   }
-})
+});
+
 export default Input;

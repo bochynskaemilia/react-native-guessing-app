@@ -5,7 +5,7 @@ import Colors from '../constants/colors';
 const Header = ({ title }) => {
   return (
     <View style={styles.header}>
-      <Text styles={styles.headerTitle}>{title}</Text>
+      <Text style={styles.headerTitle}>{title}</Text>
     </View>
   );
 };
@@ -20,8 +20,9 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   headerTitle: {
-    color: "black",
-    fontSize: 18
+    color: 'black',
+    fontSize: 18,
+    fontFamily: 'open-sans-bold'
   }
 });
 

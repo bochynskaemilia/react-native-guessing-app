@@ -10,6 +10,7 @@ import {
 import BodyText from "../components/BodyText";
 import Colors from '../constants/colors';
 import HighlightText from "../components/HighlightText";
+import PrimaryButton from "../components/PrimaryButton";
 
 const GameOver = ({ rounds, userNumber, onRestart }) => {
   return (
@@ -25,7 +26,7 @@ const GameOver = ({ rounds, userNumber, onRestart }) => {
         <Text style={styles.heighlight}> {userNumber} </Text>
       </BodyText>
       <View style={styles.buttonContainter}>
-        <Button title="NEW GAME" onPress={onRestart} />
+        <PrimaryButton onPress={onRestart}>NEW GAME</PrimaryButton>
       </View>
     </View>
   );

@@ -13,6 +13,7 @@ import { generateRandomBetween } from "../functions";
 import Number from "../components/Number";
 import Card from "../components/Card";
 import BodyText from "../components/BodyText";
+import PrimaryButton from "../components/PrimaryButton";
 
 const GameScreen = ({ userChoice, onGameOver }) => {
   const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, userChoice));
@@ -59,8 +60,8 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       <BodyText>Opponent's guess</BodyText>
       <Number>{currentGuess}</Number>
       <Card style={styles.buttonContainer}>
-        <Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
-        <Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
+        <PrimaryButton style={styles.button} onPress={nextGuessHandler.bind(this, 'lower')}>LOWER</PrimaryButton>
+        <PrimaryButton style={styles.button} onPress={nextGuessHandler.bind(this, 'greater')}>GREATER</PrimaryButton>
       </Card>
     </View>
   );
@@ -78,6 +79,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 300,
     maxWidth: '80%'
+  },
+  button: {
+    fontSize: 14,
+    paddingHorizontal: 12
   }
 });
 

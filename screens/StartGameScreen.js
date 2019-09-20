@@ -31,18 +31,24 @@ const StartGameScreen = ({ onStartGame }) => {
   const confirmInputHandler = () => {
     const chosenNumber = parseInt(enteredValue);
 
-    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+    isInvalid(chosenNumber) ?
       Alert.alert(
         'Invalid Number',
         'The entered value has to be a number between 1 and 99',
         [{ text: 'Got it', style: 'destructive', onPress: resetInputHandler }]
-      );
-      return;
-    }
+      ) :
+      correctValueHandler(chosenNumber);
+  };
+
+  const correctValueHandler = chosenNumber => {
     setConfirmed(true);
     setSelectedNumber(parseInt(chosenNumber));
     setEnteredValue('');
     Keyboard.dismiss();
+  };
+
+  const isInvalid = chosenNumber => {
+    return isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99;
   };
 
   let confirmedOutput;

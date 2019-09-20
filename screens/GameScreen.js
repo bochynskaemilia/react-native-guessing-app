@@ -21,15 +21,16 @@ const GameScreen = ({ userChoice, onGameOver }) => {
   const currentHigh = useRef(100);
 
   const nextGuessHandler = direction => {
-    if ((direction === Direction.lower && currentGuess < userChoice) ||
-      (direction === Direction.greater && currentGuess > userChoice)) {
+    directionInvalid(direction) ?
       Alert.alert(
         'Wrong direction',
         'You must give the right direction',
         [{ text: 'Ok', style: 'cancel' }]
-      );
-      return;
-    }
+      ) :
+      correctGuessHandler(direction);
+  };
+
+  const correctGuessHandler = direction => {
     if (direction === 'lower') {
       currentHigh.current = currentGuess;
     } else {
@@ -39,6 +40,11 @@ const GameScreen = ({ userChoice, onGameOver }) => {
 
     setCurrentGuess(nextNumber);
     setRounds(currentRounds => currentRounds + 1);
+  };
+
+  const directionInvalid = direction => {
+    return (direction === Direction.lower && currentGuess < userChoice) ||
+      (direction === Direction.greater && currentGuess > userChoice);
   };
 
   useEffect(() => {
@@ -56,8 +62,8 @@ const GameScreen = ({ userChoice, onGameOver }) => {
         <Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
       </Card>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   screen: {

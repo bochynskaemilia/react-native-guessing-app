@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,10 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert
+  Alert,
+  Dimensions,
+  ScrollView,
+  KeyboardAvoidingView
 } from 'react-native';
 import Colors from '../constants/colors';
 
@@ -20,6 +23,18 @@ const StartGameScreen = ({ onStartGame }) => {
   const [enteredValue, setEnteredValue] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
+  const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 4);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      setButtonWidth(Dimensions.get('window').width / 4);
+    }
+
+    Dimensions.addEventListener('change', updateWidth);
+    return () => {
+      Dimensions.removeEventListener('change', updateWidth)
+    };
+  })
 
   const numberInputHandler = inputText => {
     setEnteredValue(inputText.replace(/[^0-9]/g, ''));
@@ -66,41 +81,45 @@ const StartGameScreen = ({ onStartGame }) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
-      <View style={styles.screen}>
-        <Text style={styles.title}>Start a New Game!</Text>
-        <Card style={styles.inputContainer}>
-          <BodyText>Select a Number</BodyText>
-          <Input
-            style={styles.input}
-            blurOnSubmit
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="number-pad"
-            maxLength={2}
-            onChangeText={numberInputHandler}
-            value={enteredValue}
-          />
-          <View style={styles.buttonsContainer}>
-            <View style={styles.button}>
-              <Button
-                color={Colors.secondary}
-                title="Reset"
-                onPress={resetInputHandler}
+    <ScrollView>
+      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={30} >
+        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
+          <View style={styles.screen}>
+            <Text style={styles.title}>Start a New Game!</Text>
+            <Card style={styles.inputContainer}>
+              <BodyText>Select a Number</BodyText>
+              <Input
+                style={styles.input}
+                blurOnSubmit
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="number-pad"
+                maxLength={2}
+                onChangeText={numberInputHandler}
+                value={enteredValue}
               />
-            </View>
-            <View style={styles.button}>
-              <Button
-                color={Colors.primary}
-                title="Confirm"
-                onPress={confirmInputHandler}
-              />
-            </View>
+              <View style={styles.buttonsContainer}>
+                <View style={{ width: buttonWidth }}>
+                  <Button
+                    color={Colors.secondary}
+                    title="Reset"
+                    onPress={resetInputHandler}
+                  />
+                </View>
+                <View style={{ width: buttonWidth }}>
+                  <Button
+                    color={Colors.primary}
+                    title="Confirm"
+                    onPress={confirmInputHandler}
+                  />
+                </View>
+              </View>
+            </Card>
+            {confirmedOutput}
           </View>
-        </Card>
-        {confirmedOutput}
-      </View>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -117,17 +136,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15
   },
   inputContainer: {
-    width: 300,
-    maxWidth: '80%',
+    width: '80%',
+    minWidth: 300,
+    maxWidth: '95%',
     alignItems: "center"
   },
   title: {
     fontFamily: 'open-sans-bold',
     fontSize: 20,
     marginVertical: 10
-  },
-  button: {
-    width: 100
   },
   input: {
     width: '30%',

@@ -1,21 +1,34 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 
 import Colors from "../constants/colors";
+import { Platform } from '@unimodules/core';
 
 const PrimaryButton = props => {
+  let Button = TouchableOpacity;
+
+  if (Platform.OS === "android" && Platform.Version >= 21) {
+    ButtonComponent = TouchableNativeFeedback
+  }
+
   return (
-    <TouchableOpacity activeOpacity={0.6} onPress={props.onPress}>
-      <View style={{ ...styles.button, ...props.style }}>
-        <Text style={styles.buttonText}>
-          {props.children}
-        </Text>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.buttonContainer}>
+      <Button activeOpacity={0.6} onPress={props.onPress}>
+        <View style={{ ...styles.button, ...props.style }}>
+          <Text style={styles.buttonText}>
+            {props.children}
+          </Text>
+        </View>
+      </Button>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    borderRadius: 5,
+    overflow: 'hidden'
+  },
   button: {
     backgroundColor: Colors.primary,
     paddingVertical: 12,

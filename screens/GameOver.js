@@ -3,8 +3,9 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
-  Image
+  Dimensions,
+  Image,
+  ScrollView
 } from 'react-native';
 
 import BodyText from "../components/BodyText";
@@ -14,21 +15,23 @@ import PrimaryButton from "../components/PrimaryButton";
 
 const GameOver = ({ rounds, userNumber, onRestart }) => {
   return (
-    <View style={styles.screen}>
-      <HighlightText style={styles.text}>The Game is Over</HighlightText>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={require('../assets/success.png')} />
-      </View>
-      <BodyText style={styles.text}>
-        Your phone needed
+    <ScrollView>
+      <View style={styles.screen}>
+        <HighlightText style={styles.text}>The Game is Over</HighlightText>
+        <View style={Dimensions.get('window').width > 350 ? styles.imageContainer : styles.imageContainerSmall}>
+          <Image style={styles.image} source={require('../assets/success.png')} />
+        </View>
+        <BodyText style={styles.text}>
+          Your phone needed
         <Text style={styles.heighlight}> {rounds} </Text>
-        rounds to guess the number
+          rounds to guess the number
         <Text style={styles.heighlight}> {userNumber} </Text>
-      </BodyText>
-      <View style={styles.buttonContainter}>
-        <PrimaryButton onPress={onRestart}>NEW GAME</PrimaryButton>
+        </BodyText>
+        <View style={styles.buttonContainter}>
+          <PrimaryButton onPress={onRestart}>NEW GAME</PrimaryButton>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -52,6 +55,14 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
     height: 200,
     borderRadius: 100,
+    overflow: "hidden"
+  },
+  imageContainerSmall: {
+    marginVertical: 15,
+    width: 180,
+    maxWidth: '80%',
+    height: 180,
+    borderRadius: 90,
     overflow: "hidden"
   },
   heighlight: {
